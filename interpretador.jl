@@ -51,9 +51,9 @@ function eliminar_parentesis(texto)
 end
 
 function validar_par(texto)
-    ind = 1
+    ind = 2
     n = length(texto)
-    cuenta = 0
+    cuenta = 1
     while ind <= n
         char = texto[ind]
         if char == '('
@@ -65,13 +65,14 @@ function validar_par(texto)
                 end
             end
             cuenta += 1
-
         elseif char == ')'
             if ind > 1
                 if texto[ind-1] == '(' 
                     throw("La cadena tiene un par de paréntesis vacío.") 
                 elseif pertenece(texto[ind-1], operadores)
-                    throw("Un paréntesis no puede terminar en un operador aritmético.") 
+                    throw("Un paréntesis no puede terminar en un operador aritmético.")
+                elseif ind < n && pertenece(texto[ind+1], cifras)
+                    throw("No está aceptado el uso de los paréntesis para multiplicar.")
                 end
             end
             cuenta -= 1
