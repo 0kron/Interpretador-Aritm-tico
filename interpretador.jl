@@ -39,8 +39,10 @@ function num_valido(texto)
     return true
 end
 
-function eliminar_parentesis(texto) 
-    if texto[1] == '(' && texto[end] == ')'
+function eliminar_parentesis(texto)
+	ind_final = validar_par(texto)
+	n = length(texto)
+    if ind_final == n
             texto = texto[2:end-1] 
             texto = eliminar_parentesis(texto)
     end
@@ -57,23 +59,19 @@ function validar_par(texto)
     while ind <= n
         char = texto[ind]
         if char == '('
-            if ind > 1 
-                if texto[ind-1] == ')'
-                    throw("No es formato válido poner dos grupos en paréntesis juntos.")
-                elseif pertenece(texto[ind-1], cifras)
-                    throw("No está aceptado el uso de los paréntesis para multiplicar.")
-                end
+            if texto[ind-1] == ')'
+                throw("No es formato válido poner dos grupos en paréntesis juntos.")
+            elseif pertenece(texto[ind-1], cifras)
+                throw("No está aceptado el uso de los paréntesis para multiplicar.")
             end
             cuenta += 1
         elseif char == ')'
-            if ind > 1
-                if texto[ind-1] == '(' 
-                    throw("La cadena tiene un par de paréntesis vacío.") 
-                elseif pertenece(texto[ind-1], operadores)
-                    throw("Un paréntesis no puede terminar en un operador aritmético.")
-                elseif ind < n && pertenece(texto[ind+1], cifras)
-                    throw("No está aceptado el uso de los paréntesis para multiplicar.")
-                end
+            if texto[ind-1] == '(' 
+                throw("La cadena tiene un par de paréntesis vacío.") 
+            elseif pertenece(texto[ind-1], operadores)
+                throw("Un paréntesis no puede terminar en un operador aritmético.")
+            elseif ind < n && pertenece(texto[ind+1], cifras)
+                throw("No está aceptado el uso de los paréntesis para multiplicar.")
             end
             cuenta -= 1
             if cuenta == 0 
@@ -115,8 +113,10 @@ function calcular(texto)
     n = length(texto)
     if n == 0
         throw("La expresión aritmética es incompleta.")
-    end 
-    texto = eliminar_parentesis(texto)
+    end
+    if texto[1] == '('
+    	texto = eliminar_parentesis(texto)
+    end
     if num_valido(texto)
         return parse(Float64, texto)
     else
