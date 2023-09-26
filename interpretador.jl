@@ -5,7 +5,6 @@ function juntar(texto)
     nueva = ""
     for char in texto
         if char != ' ' && char != '\t' && char != '\n'
-            println(char)
             nueva = nueva * char
         end
     end
@@ -13,13 +12,12 @@ function juntar(texto)
 end
 
 function pertenece(elemento, lista)
-    res = false
     for e in lista
         if e == elemento
-            res = true
+            return true
         end
     end
-    return res
+    return false
 end
 
 function num_valido(texto)
@@ -32,7 +30,7 @@ function num_valido(texto)
             	return false
         	end
         elseif char == '.'
-            cuenta = cuenta + 1
+            cuenta += 1
             if cuenta > 1
                 throw("Un número sólo puede tener un punto decimal")
             end
@@ -42,9 +40,8 @@ function num_valido(texto)
 end
 
 function eliminar_parentesis(texto) 
-    n = length(texto)
-    if texto[1] == '(' && texto[n] == ')'
-            texto = texto[2:n-1] 
+    if texto[1] == '(' && texto[end] == ')'
+            texto = texto[2:end-1] 
             texto = eliminar_parentesis(texto)
     end
     if texto == ""
