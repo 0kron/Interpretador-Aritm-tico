@@ -3,7 +3,9 @@ global cifras = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '.']
 
 function juntar(texto)
     nueva = ""
-    for char in texto
+    n = length(texto)
+    for ind in n
+    	char = texto[ind]
         if char != ' ' && char != '\t' && char != '\n'
             nueva = nueva * char
         end
@@ -11,20 +13,13 @@ function juntar(texto)
     return nueva
 end
 
-function pertenece(elemento, lista)
-    for e in lista
-        if e == elemento
-            return true
-        end
-    end
-    return false
-end
-
 function num_valido(texto)
     cuenta = 0
-    for char in texto
-        if !pertenece(char, cifras)
-        	if !pertenece(char, ['+', '*', '(', ')'])
+    n = length(texto)
+    for ind in 1:n
+    	char = texto[ind]
+        if !(char in cifras)
+        	if !(char in ['+', '*', '(', ')'])
             	throw("El caracter '$char' no pertenece a una expresión válida.")
             else
             	return false
@@ -59,19 +54,20 @@ function validar_par(texto)
     cuenta = 1
     while ind <= n
         char = texto[ind]
+        char_anterior = texto[ind-1]
         if char == '('
-            if pertenece(texto[ind-1], cifras)
+            if char_anterior in cifras
                 throw("No está aceptado el uso de los paréntesis para multiplicar.")
-            elseif texto[ind-1] == ')'
+            elseif char_anterior == ')'
                 throw("No es formato válido poner dos grupos en paréntesis juntos.")
             end
             cuenta += 1
         elseif char == ')'
-            if texto[ind-1] == '(' 
+            if char_anterior == '(' 
                 throw("La cadena tiene un par de paréntesis vacío.") 
-            elseif pertenece(texto[ind-1], operadores)
+            elseif char_anterior in operadores
                 throw("Un paréntesis no puede terminar en un operador aritmético.")
-            elseif ind < n && pertenece(texto[ind+1], cifras)
+            elseif ind < n && (texto[ind+1] in cifras)
                 throw("No está aceptado el uso de los paréntesis para multiplicar.")
             end
             cuenta -= 1
