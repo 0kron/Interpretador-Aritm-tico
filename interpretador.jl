@@ -40,15 +40,16 @@ function num_valido(texto)
 end
 
 function eliminar_parentesis(texto)
-	ind_final = validar_par(texto)
 	n = length(texto)
-    if ind_final == n
-            texto = texto[2:end-1] 
-            texto = eliminar_parentesis(texto)
-    end
-    if texto == ""
-        throw("La cadena tiene un par de paréntesis vacío.")
-    end
+	if n == 0
+		throw("La cadena tiene un par de paréntesis vacío.")
+	elseif texto[1] == '('
+		ind_final = validar_par(texto)
+		if ind_final == n
+		        texto = texto[2:end-1] 
+		        texto = eliminar_parentesis(texto)
+		end
+	end
     return texto
 end
 
@@ -59,10 +60,10 @@ function validar_par(texto)
     while ind <= n
         char = texto[ind]
         if char == '('
-            if texto[ind-1] == ')'
-                throw("No es formato válido poner dos grupos en paréntesis juntos.")
-            elseif pertenece(texto[ind-1], cifras)
+            if pertenece(texto[ind-1], cifras)
                 throw("No está aceptado el uso de los paréntesis para multiplicar.")
+            elseif texto[ind-1] == ')'
+                throw("No es formato válido poner dos grupos en paréntesis juntos.")
             end
             cuenta += 1
         elseif char == ')'
@@ -74,15 +75,14 @@ function validar_par(texto)
                 throw("No está aceptado el uso de los paréntesis para multiplicar.")
             end
             cuenta -= 1
-            if cuenta == 0 
-            	if ind == n
-            		return ind
-            	elseif texto[ind+1] != ')'
-            		return ind
-            	end
-            end
         end
-        if cuenta == -1
+        if cuenta == 0 
+        	if ind == n
+        		return ind
+        	elseif texto[ind+1] != ')'
+        		return ind
+        	end
+        elseif cuenta == -1
             throw("La cadena tiene más ')' de los necesarios.")
         end
         ind += 1
