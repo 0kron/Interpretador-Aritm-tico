@@ -1,5 +1,37 @@
 global operadores =  ['+', '*']
 global cifras = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '.']
+local entrada = ""
+println("\n\t - Calculadora de operaciones aritméticas - ")
+println("Sólo se acepta el uso de las operaciones suma y multiplicación.")
+print("\t[1] - Ingresar expresión de una sola línea. \n\t[2] - Ingresar una expresión multi-línea.\n\t[ENTER] - Salir.\nSeleccione una opción: ")
+opcion = readline()[1]
+println("la opción fue ", opcion)
+println(typeof(opcion))
+if opcion == '1' || opcion == '2'
+	print("\nIngresa la expresión a calcular")
+	if opcion == "1"
+		print(": ")
+		entrada = readline()
+		
+	elseif opcion == "2"
+		print(", escribe más de una línea de la expresión use Ctrl-D para terminar de escribir: ")
+		lineas = readlines()
+		n_lineas = length(lineas)
+		for i in 1:n_lineas
+			entrada = entrada * lineas[i]
+		end
+	resultado = calcular(entrada)
+	println("\nEl resultado de la expresión es ", resultado)
+else
+	println("\t - Programa Finalizado -")
+end
+
+print("\nIngresa la expresión a calcular: ")
+lineas = readlines()
+n_lineas = length(lineas)
+for i in 1:n_lineas
+	entrada = entrada * lineas[i]
+end
 
 function juntar(texto)
     nueva = ""
@@ -129,3 +161,4 @@ function calcular(texto)
     	end
     end
 end
+
