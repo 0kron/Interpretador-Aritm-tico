@@ -1,42 +1,30 @@
 global operadores =  ['+', '*']
 global cifras = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '.']
-local entrada = ""
-println("\n\t - Calculadora de operaciones aritméticas - ")
-println("Sólo se acepta el uso de las operaciones suma y multiplicación.")
-print("\t[1] - Ingresar expresión de una sola línea. \n\t[2] - Ingresar una expresión multi-línea.\n\t[ENTER] - Salir.\nSeleccione una opción: ")
-opcion = readline()[1]
-println("la opción fue ", opcion)
-println(typeof(opcion))
-if opcion == '1' || opcion == '2'
-	print("\nIngresa la expresión a calcular")
-	if opcion == "1"
-		print(": ")
-		entrada = readline()
-		
-	elseif opcion == "2"
-		print(", escribe más de una línea de la expresión use Ctrl-D para terminar de escribir: ")
-		lineas = readlines()
-		n_lineas = length(lineas)
-		for i in 1:n_lineas
-			entrada = entrada * lineas[i]
+
+function main()
+	fin = true
+	entrada = ""
+	println("\n\t - Calculadora de operaciones aritméticas - ")
+	println("\nSólo se acepta el uso de las operaciones suma y multiplicación, use un doble salto de línea para terminar de escribir.")
+	print("\nIngresa la expresión: ")
+	while fin
+		linea = readline()
+		entrada = entrada * linea
+		if linea == ""
+			fin = false
 		end
+	end
+	entrada = juntar(entrada)
 	resultado = calcular(entrada)
-	println("\nEl resultado de la expresión es ", resultado)
-else
-	println("\t - Programa Finalizado -")
-end
+	println("\nEl resultado de la expresión:\n\t", entrada, " = ", resultado)
 
-print("\nIngresa la expresión a calcular: ")
-lineas = readlines()
-n_lineas = length(lineas)
-for i in 1:n_lineas
-	entrada = entrada * lineas[i]
+	print("\t - Programa Finalizado -")
 end
-
+	
 function juntar(texto)
     nueva = ""
     n = length(texto)
-    for ind in n
+    for ind in 1:n
     	char = texto[ind]
         if char != ' ' && char != '\t' && char != '\n'
             nueva = nueva * char
@@ -162,3 +150,5 @@ function calcular(texto)
     end
 end
 
+
+main()
