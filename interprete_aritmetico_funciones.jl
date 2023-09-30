@@ -127,7 +127,7 @@ function calcular(texto)
             elseif ind_op != 0 #al existir la multiplicación divide la cadena en dos y regresa el resultado de "calcular" del primer operando y del segundo operando
     			return calcular(texto[1:ind_op-1]) * calcular(texto[ind_op+1:end]) #separa los operandos de la multiplicación y se vuelve a correr la función "calcular" con ambos operandos
     		else 
-    			throw("En <$texto>, se tienen más ')' de lo necesario.") #No hay problemas con los operadores, el único error posible es cuando validar paréntesis no fue ejecutado porque no empezaba en '('
+    			throw("En <$texto>, existe un uso de los paréntesis indevido.") #No hay problemas con los operadores, el único error posible es cuando validar paréntesis no fue ejecutado porque no empezaba en '('
     		end
     	end
     end
