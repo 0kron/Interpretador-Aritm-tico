@@ -181,12 +181,8 @@ function calcular(texto)
                 throw("Falta un a expresión o número después de <$texto>") #error
             elseif ind_op != 0 #al existir la multiplicación divide la cadena en dos y regresa el resultado de "calcular" del primer operando y del segundo operando
     			return calcular(texto[1:ind_op-1]) * calcular(texto[ind_op+1:end]) #separa los operandos de la multiplicación y se vuelve a correr la función "calcular" con ambos operandos
-    		else 
-<<<<<<< HEAD
-    			throw("En <$texto>, existe un uso de los paréntesis indevido.") #No hay problemas con los operadores, el único error posible es cuando validar paréntesis no fue ejecutado porque no empezaba en '('
-=======
+    		else
     			throw("En <$texto>, existe un uso de los paréntesis indebido.") #No hay problemas con los operadores, el único error posible es cuando validar paréntesis no fue ejecutado porque no empezaba en '('
->>>>>>> 85fd81d (Ya por favor)
     		end
     	end
     end
